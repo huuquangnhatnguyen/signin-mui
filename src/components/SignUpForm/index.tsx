@@ -16,7 +16,7 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 
 import * as React from 'react';
-// import { SwipeableViews } from 'react-swipeable-views-v18';
+// import SwipeableViews from 'react-swipeable-views-react-18-fix';
 // import { autoPlay } from 'react-swipeable-views-utils-react-18-fix';
 
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
@@ -24,6 +24,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { Carousel } from '../Carousel';
 
 
 const defaultTheme = createTheme();
@@ -113,8 +114,8 @@ export default function SignInSide() {
                             }}
                         >
                             <img
-                                src="./assets/images/image 13.jpg"
-                                style={{ maxWidth: "100%" }}
+                                src={require("../../../src/assets/images/TMA_LOGO.png")}
+                                style={{ maxWidth: "20%", maxHeight: "20%" }}
                             />
                             <Typography component="h1" variant="h5" align='left' sx={{
                                 width: '100%', paddingLeft: 1, color: "#216CE3"
@@ -259,7 +260,26 @@ export default function SignInSide() {
                         item
                         xs={10}
                         md={8}
+                        component={Paper} elevation={0} sx={{ background: '#1C2636' }}
                     >
+
+                        <Box
+                            sx={{
+                                // my: 30,
+                                // mx: 4,
+                                // display: 'flex',
+                                // flexDirection: 'column',
+                                height: '100%',
+                                width: '100%',
+                                alignItems: 'center',
+                                background: '#216CE3',
+                                // color: '#FFFFFF',
+                                borderBottomLeftRadius: '60px',
+                                borderTopLeftRadius: '60px',
+                            }}
+                        >
+                            <Carousel />
+                        </Box>
                         {/* <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
                             <Paper
                                 square
@@ -325,8 +345,8 @@ export default function SignInSide() {
                                         Back
                                     </Button>
                                 }
-                            /> */}
-                        {/* </Box> */}
+                            /> 
+                        </Box> */}
                     </Grid>
 
 
