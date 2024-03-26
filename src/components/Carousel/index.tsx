@@ -1,6 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import { CarouselItem } from "./CarouselItem";
-import './carousel.css';
+
+import { createTheme, ThemeProvider } from "@mui/material";
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import IconButton from "@mui/material/IconButton";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import FiberManualRecordOutlinedIcon from '@mui/icons-material/FiberManualRecordOutlined';
 
 export const Carousel = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -25,67 +33,80 @@ export const Carousel = () => {
             icon: require("../../../src/assets/images/SLIDER_3.svg"),
         },
     ];
+
     const updateIndex = (newIndex: number) => {
         if (newIndex < 0) {
             newIndex = 0;
         } else if (newIndex >= items.length) {
-            newIndex = items.length - 1;
+            newIndex = 0;
         }
 
         setActiveIndex(newIndex);
     };
-    return (
-        <div className="carousel">
-            <div
-                className="inner"
-                style={{
-                    transform: `translate(-${activeIndex * 100}%)`
-                }}
-            >
-                {items.map((item) => {
-                    return <CarouselItem item={item} width={"100%"} />;
-                })}
-            </div>
 
-            <div className="carousel-buttons">
-                <button
-                    className="button-arrow"
-                    onClick={() => {
-                        updateIndex(activeIndex - 1);
+    const defaultTheme = createTheme();
+
+    return (
+        <ThemeProvider theme={defaultTheme}>
+            <Box>
+                <Grid className="carousel"
+                    container sx={{
+                        overflow: 'hidden',
+                        width: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center'
                     }}
+                    alignItems='center'
                 >
-                    <span className="material-symbols-outlined">arrow_back_ios</span>{" "}
-                </button>
-                <div className="indicators">
-                    {items.map((item, index) => {
-                        return (
-                            <button
-                                className="indicator-buttons"
-                                onClick={() => {
-                                    updateIndex(index);
-                                }}
-                            >
-                                <span
-                                    className={`material-symbols-outlined ${index === activeIndex
-                                        ? "indicator-symbol-active"
-                                        : "indicator-symbol"
-                                        }`}
-                                >
-                                    radio_button_checked
-                                </span>
-                            </button>
-                        );
-                    })}
-                </div>
-                <button
-                    className="button-arrow"
-                    onClick={() => {
-                        updateIndex(activeIndex + 1);
-                    }}
-                >
-                    <span className="material-symbols-outlined">arrow_forward_ios</span>
-                </button>
-            </div>
-        </div>
+                    <Grid
+                        className="inner"
+                        sx={{
+
+                            display: "flex", flexDirection: 'row',
+                            width: '800px',
+                            height: '1000px',
+                            whiteSpace: 'nowrap',
+                            transition: 'transform 0.3s ease-in-ease-out',
+                            color: '#ffffff',
+                            transform: `translate(-${activeIndex * 100}%)`,
+                        }}
+                        alignItems='center'
+                        justifyContent='left'                    >
+                        {items.map((item) => {
+                            return <CarouselItem item={item} width={'100 %'} />;
+                        })}
+                    </Grid>
+
+                    <Grid className="carousel-buttons" sx={{ display: 'inline-flex', justifyContent: 'center' }}>
+
+                        <IconButton
+                            onClick={() => {
+                                updateIndex(activeIndex - 1);
+                            }} >
+                            <ArrowBackIosIcon />
+                        </IconButton>
+
+                        <div className="indicators">
+                            {items.map((item, index) => {
+                                return (
+                                    <IconButton>
+                                        {activeIndex === index ? <FiberManualRecordIcon /> : <FiberManualRecordOutlinedIcon />}
+
+                                    </IconButton>
+                                );
+                            })}
+                        </div>
+                        <IconButton
+                            onClick={() => {
+                                updateIndex(activeIndex + 1);
+                            }} >
+                            <ArrowForwardIosIcon />
+                        </IconButton>
+                    </Grid>
+
+                </Grid>
+            </Box >
+        </ThemeProvider >
     );
 };

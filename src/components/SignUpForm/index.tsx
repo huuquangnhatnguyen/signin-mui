@@ -1,5 +1,3 @@
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Box from '@mui/material/Box';
@@ -11,13 +9,11 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import Link from '@mui/material/Link';
-import MobileStepper from '@mui/material/MobileStepper';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 
 import * as React from 'react';
-// import SwipeableViews from 'react-swipeable-views-react-18-fix';
-// import { autoPlay } from 'react-swipeable-views-utils-react-18-fix';
+
 
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -26,6 +22,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { Carousel } from '../Carousel';
 
+
+import * as locales from '@mui/material/locale';
+type SupportedLocales = keyof typeof locales;
 
 const defaultTheme = createTheme();
 
@@ -40,39 +39,16 @@ const formTheme = createTheme({
     },
 });
 
-// const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
-
-// const images = [
-//     {
-//         imgPath:
-//             'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
-//     },
-//     {
-//         imgPath:
-//             'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
-//     },
-//     {
-//         imgPath:
-//             'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250',
-//     },
-// ];
-
-// const [activeStep, setActiveStep] = React.useState(0);
-// const maxSteps = images.length;
-
-// const handleNext = () => {
-//     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-// };
-
-// const handleBack = () => {
-//     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-// };
-
-// const handleStepChange = (step: number) => {
-//     setActiveStep(step);
-// };
 
 export default function SignInSide() {
+
+    const [locale, setLocale] = React.useState<SupportedLocales>('enUS');
+
+    const themeWithLocale = React.useMemo(
+        () => createTheme(defaultTheme, locales[locale]),
+        [locale, defaultTheme],
+    );
+
     const [showPassword, setShowPassword] = React.useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -80,6 +56,11 @@ export default function SignInSide() {
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
+
+    const handleClickLanguage = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setLocale("viVN");
+        console.log(locale)
+    }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -91,20 +72,22 @@ export default function SignInSide() {
     };
 
     return (
-        <ThemeProvider theme={defaultTheme}>
-            <Box>
-                <Grid container component="main" sx={{
-                    height: '100vh', background: '#1C2636'
-                }}>
-
+        <ThemeProvider theme={themeWithLocale}>
+            <Box component="main" sx={{
+                height: '100vh', background: '#1C2636'
+            }}>
+                <Grid container>
 
                     <CssBaseline />
 
-                    <Grid item component={Paper} elevation={0} square sx={{ background: '#1C2636' }}>
-                        <Box
+                    <Grid item xs sx={{ background: '#1C2636', display: 'flex' }} justifyContent='center'>
+                        <Box justifyContent='center'
                             sx={{
-                                my: 30,
-                                mx: 4,
+                                my: 50,
+                                mx: 5,
+                                paddingTop: 15,
+                                paddingBottom: 15,
+                                maxHeight: '60%',
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
@@ -115,22 +98,21 @@ export default function SignInSide() {
                         >
                             <img
                                 src={require("../../../src/assets/images/TMA_LOGO.png")}
-                                style={{ maxWidth: "20%", maxHeight: "20%" }}
+                                style={{ maxWidth: "20%", maxHeight: "20%", marginTop: '2rem', marginBottom: '2rem' }}
                             />
                             <Typography component="h1" variant="h5" align='left' sx={{
-                                width: '100%', paddingLeft: 1, color: "#216CE3"
+                                width: '80%', paddingLeft: 1, color: "#216CE3"
                             }}>
                                 Log in
                             </Typography>
 
-                            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                            <Grid container component="form" onSubmit={handleSubmit} sx={{ mt: 1 }} justifyContent='center'>
                                 <ThemeProvider theme={formTheme}>
                                     <TextField
-                                        sx={{ padding: 1 }}
+                                        sx={{ padding: 1, width: '80%' }}
                                         inputProps={{ style: { color: "white" } }}
                                         margin="dense"
                                         required
-                                        fullWidth
                                         type="email"
                                         id="email"
                                         label="Email"
@@ -147,12 +129,11 @@ export default function SignInSide() {
                                     />
 
                                     <TextField
-                                        sx={{ padding: 1 }}
-                                        inputProps={{ style: { color: "white" } }}
+                                        sx={{ padding: 1, width: '80%' }}
+                                        inputProps={{ style: { color: "white" }, }}
                                         margin="dense"
                                         required
-                                        fullWidth
-                                        type="password"
+                                        type={showPassword ? 'text' : 'password'}
                                         id="password"
                                         label="Password"
                                         name="password"
@@ -181,49 +162,19 @@ export default function SignInSide() {
                                         placeholder="Your Password"
                                     />
 
-                                    {/* <FormControl sx={{ padding: 1, width: '100%' }} variant="outlined" color="secondary" focused>
-                                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-password"
-                                            type={showPassword ? 'text' : 'password'}
-
-
-
-                                            startAdornment={
-                                                <InputAdornment position="start" >
-                                                    <LockOutlinedIcon style={{ color: '#DDD' }} />
-                                                </InputAdornment>
-                                            }
-
-                                            endAdornment={
-                                                <InputAdornment position="end">
-                                                    <IconButton
-                                                        aria-label="toggle password visibility"
-                                                        onClick={handleClickShowPassword}
-                                                        onMouseDown={handleMouseDownPassword}
-                                                        edge="end"
-                                                        style={{ color: '#DDD' }}
-                                                    >
-                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            }
-                                            label="Password"
-                                            placeholder='Your PassWord'
-                                        />
-                                    </FormControl> */}
                                 </ThemeProvider>
 
-                                <Grid container sx={{ mx: 1 }}>
-                                    <Grid item xs={6} md={6}>
+                                <Grid container sx={{ mx: 1, width: '80%' }} >
+                                    <Grid item xs={6} sx={{ textAlign: 'left', paddingLeft: 1, }}>
                                         <FormControlLabel
                                             control={<Checkbox value="remember" color="primary" />}
                                             label="Remember me"
+                                            sx={{ alignItems: 'center', paddingLeft: 1, width: '80%' }}
                                         />
                                     </Grid>
 
 
-                                    <Grid item xs={6} md={6} alignItems='center'>
+                                    <Grid item xs={6} sx={{ textAlign: 'right', paddingRight: 2, margin: 'auto' }}>
                                         <Link
                                             href="#"
                                             variant="body2"
@@ -238,120 +189,70 @@ export default function SignInSide() {
                                     type="submit"
                                     fullWidth
                                     variant="contained"
-                                    sx={{ mt: 3, mb: 2, mx: 1, width: '95%' }}
+                                    sx={{ mt: 3, mb: 2, mx: 1, width: '80%' }}
                                 >
                                     Sign In
                                 </Button>
 
-                                <Grid container spacing={2} sx={{ mx: 1, my: 2 }}>
+                                <Grid container gap={1} sx={{ mx: 1, my: 2, width: '80%' }}>
                                     <Typography variant='body2'>Don't have an account?</Typography>
                                     <Link href="#" variant="body2">
                                         {"Sign Up"}
                                     </Link>
                                 </Grid>
 
+                                <Grid container rowSpacing={{ xs: 1, md: 2, xl: 3 }} alignItems="center" justifyContent='center'>
+                                    <Grid item xs={2} alignItems="center" >
+                                        <img
+                                            src={require("../../../src/assets/images/VIE_FLAG.png")}
+                                            style={{ width: "20px", height: "20px" }}
+                                        />
+                                        <Button onClick={
+                                            handleClickLanguage
+                                        }>VIE</Button>
+                                    </Grid>
 
-                                {/* <Copyright sx={{ mt: 5 }} /> */}
-                            </Box>
+                                    <Grid item xs={2} alignItems="center" >
+                                        <img
+                                            src={require("../../../src/assets/images/US_FLAG.png")}
+                                            style={{ width: "20px", height: "20px" }}
+                                        />
+                                        <Button onClick={
+                                            handleClickLanguage
+                                        }>ENG</Button>
+                                    </Grid>
+
+                                </Grid>
+
+                            </Grid>
                         </Box>
-                    </Grid>
+                    </Grid >
 
                     <Grid
                         item
                         xs={10}
                         md={8}
-                        component={Paper} elevation={0} sx={{ background: '#1C2636' }}
+                        sx={{ background: '#1C2636' }}
                     >
 
                         <Box
                             sx={{
-                                // my: 30,
-                                // mx: 4,
-                                // display: 'flex',
-                                // flexDirection: 'column',
-                                height: '100%',
-                                width: '100%',
+                                height: '1500px',
+                                maxWidth: '800px',
                                 alignItems: 'center',
                                 background: '#216CE3',
-                                // color: '#FFFFFF',
                                 borderBottomLeftRadius: '60px',
                                 borderTopLeftRadius: '60px',
                             }}
                         >
                             <Carousel />
                         </Box>
-                        {/* <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
-                            <Paper
-                                square
-                                elevation={0}
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    height: 50,
-                                    pl: 2,
-                                    bgcolor: 'background.default',
-                                }}
-                            >
-                            </Paper>
-                            <AutoPlaySwipeableViews
-                                axis={defaultTheme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                                index={activeStep}
-                                onChangeIndex={handleStepChange}
-                                enableMouseEvents
-                            >
-                                {images.map((step, index) => (
-                                    <div>
-                                        {Math.abs(activeStep - index) <= 2 ? (
-                                            <Box
-                                                component="img"
-                                                sx={{
-                                                    height: 255,
-                                                    display: 'block',
-                                                    maxWidth: 400,
-                                                    overflow: 'hidden',
-                                                    width: '100%',
-                                                }}
-                                                src={step.imgPath}
-                                            />
-                                        ) : null}
-                                    </div>
-                                ))}
-                            </AutoPlaySwipeableViews>
-                            <MobileStepper
-                                steps={maxSteps}
-                                position="static"
-                                activeStep={activeStep}
-                                nextButton={
-                                    <Button
-                                        size="small"
-                                        onClick={handleNext}
-                                        disabled={activeStep === maxSteps - 1}
-                                    >
-                                        Next
-                                        {defaultTheme.direction === 'rtl' ? (
-                                            <KeyboardArrowLeft />
-                                        ) : (
-                                            <KeyboardArrowRight />
-                                        )}
-                                    </Button>
-                                }
-                                backButton={
-                                    <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                                        {defaultTheme.direction === 'rtl' ? (
-                                            <KeyboardArrowRight />
-                                        ) : (
-                                            <KeyboardArrowLeft />
-                                        )}
-                                        Back
-                                    </Button>
-                                }
-                            /> 
-                        </Box> */}
+
                     </Grid>
 
 
-                </Grid>
-            </Box>
+                </Grid >
+            </Box >
         </ThemeProvider >
     );
 }
