@@ -55,6 +55,10 @@ export default function ImageSwiper() {
                 {items.map((item) => {
                     return <SwiperSlide><SwipeItem item={item} width={'100%'} height={'100%'} /></SwiperSlide>
                 })}
+
+                {/* <SwiperSlide>Side1</SwiperSlide>
+                <SwiperSlide>Side2</SwiperSlide>
+                <SwiperSlide>Side3</SwiperSlide> */}
             </Swiper>
         </>
     );

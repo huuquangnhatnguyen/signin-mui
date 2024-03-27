@@ -22,7 +22,7 @@ const LanguageSelector = () => {
 
     return (
 
-        <Grid item container justifyContent='center' sx={{ bgcolor: '#ADC9F5', width: 'auto', borderRadius: '10px' }}>
+        <Grid item container justifyContent='center' sx={{ bgcolor: '#ADC9F5', width: 'auto', borderRadius: '10px', marginBottom: '40px' }}>
             {languages.map((lng) => {
                 return (
                     <Button
