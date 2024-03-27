@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+
+@media screen and (max-width: 865px){
+  .SignIn{
+    margin: auto;
+    height: 100vh;
+    width: 100vw
+  }
+  .Swiper{
+    display: none;
+  }
+}

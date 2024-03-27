@@ -20,14 +20,14 @@ export const SwipeItem = ({ item, width, height }: { item: SwipeItem; width: str
                 backgroundImage: `url(${item.icon.default})`,
                 backgroundSize: '80% auto',
                 backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'top 10% center',
+                backgroundPosition: 'center',
                 alignItems: 'center',
                 justifyContent: 'center',
             }}
         >
 
-            <Typography variant="h4" sx={{ position: 'absolute', top: '80%', my: 2, color: '#FFF' }}>{item.title}</Typography>
-            <Typography variant="body1" sx={{ position: 'absolute', top: '85%', my: 2, color: '#FFF' }}>{item.description}</Typography>
+            <Typography variant="h4" sx={{ position: 'absolute', top: '75%', my: 2, color: '#FFF' }}>{item.title}</Typography>
+            <Typography variant="body1" sx={{ position: 'absolute', top: '80%', my: 2, color: '#FFF' }}>{item.description}</Typography>
 
         </Stack>
     );

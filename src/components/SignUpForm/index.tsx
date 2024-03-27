@@ -1,9 +1,7 @@
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import CssBaseline from '@mui/material/CssBaseline';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
@@ -14,26 +12,25 @@ import TextField from '@mui/material/TextField';
 import * as React from 'react';
 
 
-import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import ImageSwiper from '../Slider';
 
 import { useTranslation } from "react-i18next";
 import LanguageSelector from '../LanguageSelector';
 
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
+
+import { ReactComponent as EmailIcon } from '../../../src/assets/images/EnvelopeSimple_Regular.svg';
+import { ReactComponent as LockIcon } from '../../../src/assets/images/Lock_Regular.svg';
+import SvgIcon from '@mui/material/SvgIcon';
+import { Box, InputLabel } from '@mui/material';
 
 const schema = yup.object().shape({
     email: yup.string().email().required(),
     password: yup.string().min(8).max(32).required(),
 });
-
-const defaultTheme = createTheme();
 
 const formTheme = createTheme({
     palette: {
@@ -42,6 +39,9 @@ const formTheme = createTheme({
         },
         secondary: {
             main: "#455E87"
+        },
+        info: {
+            main: '#DDDDDD'
         }
     },
 });
@@ -68,169 +68,145 @@ export default function SignInSide() {
     };
 
     return (
-        <ThemeProvider theme={defaultTheme}>
-            <Box sx={{ height: '100vh' }}>
-                <Grid container component="main" sx={{
-                    background: '#1C2636', maxHeight: '100vh'
-                }}>
+        <Stack
+            sx={{
+                m: 'auto',
+                // margin: '0 auto',
+                height: 'auto',
+                maxHeight: '630px',
+                maxWidth: '438px',
+                display: 'flex',
+                flexDirection: 'column',
+                background: '#232F43',
+                color: '#FFFFFF',
+                borderRadius: '32px',
+            }}
+            alignItems='center'
+            justifyContent='center'
+        >
+            <Box sx={{ paddingTop: '24px' }}>
+                <img
+                    src={require("../../../src/assets/images/TMA_LOGO.png")}
+                    style={{
+                        maxWidth: "139.2px", maxHeight: "60px", marginBottom: '56px'
+                    }}
+                />
+            </Box>
 
 
-                    <CssBaseline />
+            <Typography variant="h4" align='left' sx={{
+                width: '358px', color: "#216CE3", marginBottom: '24px',
+            }}>
+                {t('login')}
+            </Typography>
 
-                    <Grid item xs sx={{ background: '#1C2636', display: 'flex' }}>
-                        <Stack
-                            sx={{
+            <Grid item container component="form" onSubmit={handleSubmit(OnSubmitHandler)} justifyContent='center'>
+                <ThemeProvider theme={formTheme}>
+                    <InputLabel sx={{ color: 'rgba(221, 221, 221, 1)', textAlign: 'left', width: '358px', marginBottom: '4px' }}>{t('email')}</InputLabel>
+                    <TextField
+                        {...register("email")}
+                        sx={{
+                            width: '358px', height: '48px', borderRadius: '8px', border: '1px', marginBottom: '16px'
+                        }}
+                        inputProps={{ style: { color: "white" } }}
+                        required
+                        fullWidth
+                        type="email"
+                        id="email"
 
-                                m: 'auto',
-                                // margin: '0 auto',
-                                height: 'auto',
-                                maxHeight: '70%',
-                                maxWidth: '50%',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                background: '#232F43',
-                                color: '#FFFFFF',
-                                borderRadius: '10px',
-                            }}
-                            alignItems='center'
-                            justifyContent='center'
-                        >
-                            <img
-                                src={require("../../../src/assets/images/TMA_LOGO.png")}
-                                style={{
-                                    maxWidth: "30%", maxHeight: "30%", margin: '2rem auto'
-                                }}
-                            />
+                        name="email"
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <EmailIcon />
+                                </InputAdornment>
+                            ),
+                        }}
+                        color="secondary" focused
+                        placeholder={t('inputEmail')}
 
-                            <Typography variant="h5" align='left' sx={{
-                                width: '80%', color: "#216CE3"
-                            }}>
-                                {t('login')}
-                            </Typography>
+                    />
+                    {errors.email && <Typography variant='body1' sx={{ color: '#DDD', mb: 1 }}>{errors.email.message}</Typography>}
 
-                            <Grid item container component="form" onSubmit={handleSubmit(OnSubmitHandler)} sx={{ mt: 1, my: 3 }}
-                                justifyContent='center'>
-                                <ThemeProvider theme={formTheme}>
-                                    <TextField
-                                        {...register("email")}
-                                        sx={{ padding: 1, width: '80%', my: 1 }}
-                                        inputProps={{ style: { color: "white" } }}
-                                        required
-                                        fullWidth
-                                        type="email"
-                                        id="email"
-                                        label="Email"
-                                        name="email"
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <EmailOutlinedIcon style={{ color: '#DDD' }} />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                        color="secondary" focused
-                                        placeholder={t('inputEmail')}
+                    <InputLabel sx={{ color: 'rgba(221, 221, 221, 1)', textAlign: 'left', width: '358px', marginBottom: '4px' }}>{t('pwd')}</InputLabel>
+                    <TextField
+                        {...register("password")}
+                        sx={{
+                            width: '358px', height: '48px', borderRadius: '8px', border: '1px', marginBottom: '16px'
+                        }}
+                        inputProps={{ style: { color: "white" } }}
+                        required
 
-                                    />
-                                    {errors.email && <Typography variant='body2' sx={{ color: '#DDD', mb: 1 }}>{errors.email.message}</Typography>}
+                        type={showPassword ? 'text' : "password"}
+                        id="password"
+                        name="password"
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <LockIcon />
+                                </InputAdornment>
+                            ),
 
-                                    <TextField
-                                        {...register("password")}
-                                        sx={{ padding: 1, width: '80%', my: 1 }}
-                                        inputProps={{ style: { color: "white" } }}
-                                        required
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                        edge="end"
+                                        style={{ color: '#DDD' }}
+                                    >
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
+                        color="secondary" focused
+                        placeholder={t('inputPwd')}
+                    />
+                    {errors.password && <Typography variant='body1' sx={{ color: '#DDD' }}>{errors.password?.message}</Typography>}
 
-                                        type={showPassword ? 'text' : "password"}
-                                        id="password"
-                                        label={t('pwd')}
-                                        name="password"
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <LockOutlinedIcon style={{ color: '#DDD' }} />
-                                                </InputAdornment>
-                                            ),
+                </ThemeProvider>
 
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton
-                                                        aria-label="toggle password visibility"
-                                                        onClick={handleClickShowPassword}
-                                                        onMouseDown={handleMouseDownPassword}
-                                                        edge="end"
-                                                        style={{ color: '#DDD' }}
-                                                    >
-                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            )
-                                        }}
-                                        color="secondary" focused
-                                        placeholder={t('inputPwd')}
-                                    />
-                                    {errors.password && <Typography variant='body2' sx={{ color: '#DDD' }}>{errors.password?.message}</Typography>}
-
-                                </ThemeProvider>
-
-                                <Grid item container sx={{ mx: 1, width: '80%' }} justifyContent='space-around'>
-                                    <Grid item xs={6}>
-                                        <FormControlLabel
-                                            control={<Checkbox value="remember" color="primary" />}
-                                            label={t('rmbme')}
-                                        />
-                                    </Grid>
-
-
-                                    <Grid item xs={6} sx={{ textAlign: 'right', paddingRight: 2, margin: 'auto' }}>
-                                        <Link
-                                            href="#"
-                                            variant="body2"
-
-                                        >
-                                            {t('forgot')}
-                                        </Link>
-                                    </Grid>
-                                </Grid>
-
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2, mx: 1, width: '80%' }}
-                                >
-                                    {t('login')}
-                                </Button>
-
-                                <Grid item container gap={1} sx={{ mx: 1, my: 2, width: '80% ' }}>
-                                    <Typography variant='body2'>{t('new')}</Typography>
-                                    <Link href="#" variant="body2">
-                                        {t('signup')}
-                                    </Link>
-                                </Grid>
-
-
-                                <LanguageSelector />
-
-                            </Grid>
-                        </Stack>
+                <Grid item container sx={{ width: '358px' }} justifyContent='space-around'>
+                    <Grid item xs={6} >
+                        <FormControlLabel
+                            control={<Checkbox value="remember" sx={{ color: "#455E87" }} />}
+                            label={t('rmbme')}
+                        />
                     </Grid>
 
-                    <Grid item
-                        xs={7}
-                        sx={{
-                            height: '100%',
-                            maxWidth: '100%',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            background: '#216CE3',
-                            borderBottomLeftRadius: '60px',
-                            borderTopLeftRadius: '60px',
-                        }}
-                    >
-                        <ImageSwiper />
 
+                    <Grid item xs={6} sx={{ textAlign: 'right', margin: 'auto' }}>
+                        <Link
+                            href="#"
+                            variant="body1"
+
+                        >
+                            {t('forgot')}
+                        </Link>
                     </Grid>
                 </Grid>
-            </Box>
-        </ThemeProvider >
-    );
+
+                <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{ my: 3, width: '358px', height: '40px', padding: '0 24px 0 24px' }}
+                >
+                    {t('login')}
+                </Button>
+
+                <Grid item container gap={1} sx={{ marginBottom: '24px', width: '358px' }}>
+                    <Typography variant='body1'>{t('new')}</Typography>
+                    <Link href="#" variant="body1">
+                        {t('signup')}
+                    </Link>
+                </Grid>
+
+
+                <LanguageSelector />
+
+            </Grid>
+        </Stack>
+    )
 }
