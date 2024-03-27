@@ -4,5 +4,8 @@
     "rmbme": "Remember me",
     "forgot": "Forgot Password?",
     "new": "Don't have an account yet?",
-    "signup": "Sign Up"
+    "signup": "Sign In",
+    "inputEmail": "Your Email",
+    "inputPwd": "Your Password",
+    "emailErr": "Your"
 }
