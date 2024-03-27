@@ -5,8 +5,8 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 const languages = [
-    { code: "EN", lang: "English" },
     { code: "VI", lang: "Vietnamese" },
+    { code: "EN", lang: "English" },
 ];
 
 const LanguageSelector = () => {
@@ -35,16 +35,16 @@ const LanguageSelector = () => {
                         onClick={() => changeLanguage(lng.code)}>
                         <img
                             src={require(`../../../src/assets/images/${lng.code}.png`)}
-                            style={{ width: "20px", height: "20px" }}
+                            style={{ width: "24px", height: "24px" }}
                         />
 
-                        <Typography>{lng.code}</Typography>
+                        <Typography sx={{ fontSize: '16px', fontWeight: 'bold', marginLeft: '8px' }} color={lng.code === i18n.language ? 'white' : 'rgba(128, 128, 128, 1)'}   >{lng.code}</Typography>
                     </Button>
 
                 );
 
             })}
-        </Grid>
+        </Grid >
     );
 };
 
