@@ -17,7 +17,7 @@ const LanguageSelector = () => {
     }, [i18n, i18n.language]);
 
     const changeLanguage = (lng: any) => {
-        console.log(i18n.changeLanguage(lng));
+        i18n.changeLanguage(lng);
     };
 
     return (

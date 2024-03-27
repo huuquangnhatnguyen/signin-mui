@@ -1,8 +1,10 @@
 {
     "login": "Đăng Nhập",
     "pwd": "Mật Khẩu",
-    "rmbme": "Ghi Nhớ Đăng Nhập",
+    "rmbme": "Ghi Nhớ",
     "forgot": "Quên Mật Khẩu?",
     "new": "Chưa Có Tài Khoản?",
-    "signup": "Đăng Ký"
+    "signup": "Đăng Ký",
+    "inputEmail": "Email của bạn",
+    "inputPwd": "Password của bạn"
 }

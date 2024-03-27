@@ -22,7 +22,7 @@ import Typography from '@mui/material/Typography';
 import ImageSwiper from '../Slider';
 
 import LanguageSelector from '../LanguageSelector';
-import { Trans, useTranslation } from "react-i18next";
+import { Trans, useTranslation, withTranslation } from "react-i18next";
 
 const defaultTheme = createTheme();
 
@@ -41,7 +41,6 @@ const formTheme = createTheme({
 export default function SignInSide() {
 
     const { t } = useTranslation();
-
     const login = t('pwd');
     console.log(login)
 
@@ -52,12 +51,6 @@ export default function SignInSide() {
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
-
-    const handleClickLanguage = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        // setLocale("viVN");
-        // console.log(locale)
-    }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -106,7 +99,7 @@ export default function SignInSide() {
                             <Typography component="h1" variant="h4" align='left' sx={{
                                 width: '80%', color: "#216CE3"
                             }}>
-                                Log in
+                                {t('login')}
                             </Typography>
 
                             <Grid item container component="form" onSubmit={handleSubmit} sx={{ mt: 1, my: 5 }}
@@ -129,7 +122,7 @@ export default function SignInSide() {
                                             ),
                                         }}
                                         color="secondary" focused
-                                        placeholder="Your email"
+                                        placeholder={t('inputEmail')}
 
                                     />
 
@@ -140,7 +133,7 @@ export default function SignInSide() {
 
                                         type={showPassword ? 'text' : "password"}
                                         id="password"
-                                        label="Password"
+                                        label={t('pwd')}
                                         name="password"
                                         InputProps={{
                                             startAdornment: (
@@ -164,7 +157,7 @@ export default function SignInSide() {
                                             )
                                         }}
                                         color="secondary" focused
-                                        placeholder="Your Password"
+                                        placeholder={t('inputPwd')}
                                     />
 
 
@@ -174,7 +167,7 @@ export default function SignInSide() {
                                     <Grid item xs={6}>
                                         <FormControlLabel
                                             control={<Checkbox value="remember" color="primary" />}
-                                            label="Remember me"
+                                            label={t('rmbme')}
                                         />
                                     </Grid>
 
@@ -185,7 +178,7 @@ export default function SignInSide() {
                                             variant="body2"
 
                                         >
-                                            Forgot password?
+                                            {t('forgot')}
                                         </Link>
                                     </Grid>
                                 </Grid>
@@ -195,13 +188,13 @@ export default function SignInSide() {
                                     variant="contained"
                                     sx={{ mt: 3, mb: 2, mx: 1, width: '80%' }}
                                 >
-                                    Sign In
+                                    {t('login')}
                                 </Button>
 
                                 <Grid item container gap={1} sx={{ mx: 1, my: 2, width: '80% ' }}>
-                                    <Typography variant='body2'>Don't have an account?</Typography>
+                                    <Typography variant='body2'>{t('new')}</Typography>
                                     <Link href="#" variant="body2">
-                                        {"Sign Up"}
+                                        {t('signup')}
                                     </Link>
                                 </Grid>
 

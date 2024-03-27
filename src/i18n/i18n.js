@@ -3,24 +3,26 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
 
-// import translationEN from "../src/translationEN.json";
-// import translationDE from "../src/translationDE.json";
+import translationEN from "../../src/assets/locale/translationEN.json";
+import translationVI from "../../src/assets/locale/translationVI.json";
 
-// const resources = {
-//     EN: {
-//         translation: translationEN
-//     },
-//     VI: {
-//         translation: translationDE
-//     }
-// };
+const resources = {
+    EN: {
+        translation: translationEN
+    },
+    VI: {
+        translation: translationVI
+    }
+};
 
 
 i18n
+    .use(Backend)
     .use(LanguageDetector)
     .use(initReactI18next)
-    .use(Backend)
     .init({
+        resources,
+        lng: 'VI',
         debug: true,
         fallbackLng: "EN",
         returnObjects: true,

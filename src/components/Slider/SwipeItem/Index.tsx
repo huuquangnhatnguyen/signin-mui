@@ -19,9 +19,9 @@ export const SwipeItem = ({ item, width, height }: { item: SwipeItem; width: str
                 width: { width },
                 height: '100vh',
                 backgroundImage: `url(${item.icon.default})`,
-                backgroundSize: '95% auto',
+                backgroundSize: '80% auto',
                 backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center top',
+                backgroundPosition: 'center',
                 alignItems: 'center',
                 justifyContent: 'center',
             }}
