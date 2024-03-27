@@ -48,3 +48,19 @@
     display: none;
   }
 }
+
+.selected{
+  background-color: rgba(119, 165, 238, 1)!important;
+  border-radius: 8px!important;
+  margin: 4px!important;
+  color: white!important;
+
+}
+
+.swiper-button-next, .swiper-button-prev{
+  display: none!important ;
+}
+
+.swiper-pagination-bullet-active{
+  background-color: rgba(231,231,231,1);
+}

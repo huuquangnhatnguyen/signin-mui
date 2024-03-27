@@ -23,7 +23,7 @@ function App() {
           background: '#1C2636', maxHeight: '100vh', maxWidth: '100vw'
         }}>
 
-          <Grid className='SignIn' item xs sx={{ background: '#1C2636', display: 'flex' }}>
+          <Grid className='SignIn' item xs sx={{ background: '#1C2636', display: 'flex', maxWidth: '100% ', maxHeight: '100%' }}>
             <SignInSide />
           </Grid>
 
