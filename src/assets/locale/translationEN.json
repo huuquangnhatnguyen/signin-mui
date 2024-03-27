@@ -6,5 +6,6 @@
     "new": "Don't have an account yet?",
     "signup": "Sign In",
     "inputEmail": "Your Email",
-    "inputPwd": "Your Password"
+    "inputPwd": "Your Password",
+    "emailErr": "Your"
 }

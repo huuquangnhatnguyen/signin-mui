@@ -21,8 +21,17 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import ImageSwiper from '../Slider';
 
+import { useTranslation } from "react-i18next";
 import LanguageSelector from '../LanguageSelector';
-import { Trans, useTranslation, withTranslation } from "react-i18next";
+
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup.string().min(8).max(32).required(),
+});
 
 const defaultTheme = createTheme();
 
@@ -41,8 +50,6 @@ const formTheme = createTheme({
 export default function SignInSide() {
 
     const { t } = useTranslation();
-    const login = t('pwd');
-    console.log(login)
 
     const [showPassword, setShowPassword] = React.useState(false);
 
@@ -51,14 +58,13 @@ export default function SignInSide() {
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        resolver: yupResolver(schema),
+    });
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+    const OnSubmitHandler = (data: any) => {
+        console.log({ data });
+        reset();
     };
 
     return (
@@ -71,11 +77,11 @@ export default function SignInSide() {
 
                     <CssBaseline />
 
-                    <Grid item xs sx={{ background: '#1C2636' }}>
+                    <Grid item xs sx={{ background: '#1C2636', display: 'flex' }}>
                         <Stack
                             sx={{
-                                my: 20,
-                                mx: 20,
+
+                                m: 'auto',
                                 // margin: '0 auto',
                                 height: 'auto',
                                 maxHeight: '70%',
@@ -92,20 +98,21 @@ export default function SignInSide() {
                             <img
                                 src={require("../../../src/assets/images/TMA_LOGO.png")}
                                 style={{
-                                    maxWidth: "20%", maxHeight: "20%", margin: '2rem auto'
+                                    maxWidth: "30%", maxHeight: "30%", margin: '2rem auto'
                                 }}
                             />
 
-                            <Typography component="h1" variant="h4" align='left' sx={{
+                            <Typography variant="h5" align='left' sx={{
                                 width: '80%', color: "#216CE3"
                             }}>
                                 {t('login')}
                             </Typography>
 
-                            <Grid item container component="form" onSubmit={handleSubmit} sx={{ mt: 1, my: 5 }}
+                            <Grid item container component="form" onSubmit={handleSubmit(OnSubmitHandler)} sx={{ mt: 1, my: 3 }}
                                 justifyContent='center'>
                                 <ThemeProvider theme={formTheme}>
                                     <TextField
+                                        {...register("email")}
                                         sx={{ padding: 1, width: '80%', my: 1 }}
                                         inputProps={{ style: { color: "white" } }}
                                         required
@@ -125,8 +132,10 @@ export default function SignInSide() {
                                         placeholder={t('inputEmail')}
 
                                     />
+                                    {errors.email && <Typography variant='body2' sx={{ color: '#DDD', mb: 1 }}>{errors.email.message}</Typography>}
 
                                     <TextField
+                                        {...register("password")}
                                         sx={{ padding: 1, width: '80%', my: 1 }}
                                         inputProps={{ style: { color: "white" } }}
                                         required
@@ -159,7 +168,7 @@ export default function SignInSide() {
                                         color="secondary" focused
                                         placeholder={t('inputPwd')}
                                     />
-
+                                    {errors.password && <Typography variant='body2' sx={{ color: '#DDD' }}>{errors.password?.message}</Typography>}
 
                                 </ThemeProvider>
 
